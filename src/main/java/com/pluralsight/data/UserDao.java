@@ -12,20 +12,26 @@ public class UserDao {
         this.dataSource = dataSource;
     }
 
-    // Register a new user - returns userId if successful, null if failed
-    public Integer register(String username) {
-        // First check if username already exists
+    // Register a new user returns userId if successful
+    public Integer register(String username, String password) {
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
+            System.err.println("Username/password cannot be empty.");
+            return null;
+        }
+
+        // Check if username already exists
         if (getUserIdByUsername(username) != null) {
             System.err.println("Username already exists!");
             return null;
         }
 
-        String sql = "INSERT INTO users (name) VALUES (?)";
+        String sql = "INSERT INTO users (name, password) VALUES (?, ?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setString(1, username);
+            statement.setString(1, username.trim());
+            statement.setString(2, password);
 
             int rowsAffected = statement.executeUpdate();
 
@@ -42,12 +48,31 @@ public class UserDao {
             System.err.println("Error registering user: " + e.getMessage());
             e.printStackTrace();
         }
+
         return null;
     }
 
-    // Login - returns userId if user exists, null if not found
-    public Integer login(String username) {
-        return getUserIdByUsername(username);
+    // Login - returns userId if username+password match, null otherwise
+    public Integer login(String username, String password) {
+        String sql = "SELECT user_id FROM users WHERE name = ? AND password = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, username.trim());
+            statement.setString(2, password);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("user_id");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error logging in user: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     // Get userId by username
@@ -57,7 +82,7 @@ public class UserDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, username);
+            statement.setString(1, username.trim());
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -68,6 +93,7 @@ public class UserDao {
             System.err.println("Error retrieving user: " + e.getMessage());
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -87,6 +113,7 @@ public class UserDao {
             System.err.println("Error retrieving all users: " + e.getMessage());
             e.printStackTrace();
         }
+
         return usernames;
     }
 
@@ -109,6 +136,7 @@ public class UserDao {
             System.err.println("Error deleting user: " + e.getMessage());
             e.printStackTrace();
         }
+
         return false;
     }
 }

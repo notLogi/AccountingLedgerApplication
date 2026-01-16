@@ -16,7 +16,7 @@ public class TransactionDao {
         this.dataSource = dataSource;
     }
 
-    // CREATE - Add a new transaction
+    // Add a new transaction
     public Transaction createTransaction(Transaction transaction) {
         String sql = "INSERT INTO transactions (date, time, description, vendor, amount, user_id) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -47,7 +47,7 @@ public class TransactionDao {
         return null;
     }
 
-    // READ - Get all transactions for a specific user
+    // Get all transactions for a specific user
     public List<Transaction> getTransactionsByUserId(int userId) {
         List<Transaction> transactions = new ArrayList<>();
         String sql = "SELECT transaction_id, date, time, description, vendor, amount, user_id FROM transactions WHERE user_id = ? ORDER BY date DESC, time DESC";
@@ -69,7 +69,7 @@ public class TransactionDao {
         return transactions;
     }
 
-    // READ - Get deposits only (amount >= 0) for a user
+    //  Get deposits only for a user
     public List<Transaction> getDepositsByUserId(int userId) {
         List<Transaction> deposits = new ArrayList<>();
         String sql = "SELECT transaction_id, date, time, description, vendor, amount, user_id FROM transactions WHERE user_id = ? AND amount >= 0 ORDER BY date DESC, time DESC";
@@ -91,7 +91,7 @@ public class TransactionDao {
         return deposits;
     }
 
-    // READ - Get payments only (amount < 0) for a user
+    // Get payments only for a user
     public List<Transaction> getPaymentsByUserId(int userId) {
         List<Transaction> payments = new ArrayList<>();
         String sql = "SELECT transaction_id, date, time, description, vendor, amount, user_id FROM transactions WHERE user_id = ? AND amount < 0 ORDER BY date DESC, time DESC";
@@ -113,7 +113,7 @@ public class TransactionDao {
         return payments;
     }
 
-    // READ - Filter transactions by date range for a user
+    // Filter transactions by date range for a user
     public List<Transaction> getTransactionsByDateRange(int userId, LocalDate startDate, LocalDate endDate) {
         List<Transaction> transactions = new ArrayList<>();
         String sql = "SELECT transaction_id, date, time, description, vendor, amount, user_id FROM transactions WHERE user_id = ? AND date >= ? AND date <= ? ORDER BY date DESC, time DESC";
@@ -137,7 +137,7 @@ public class TransactionDao {
         return transactions;
     }
 
-    // READ - Filter transactions by vendor for a user
+    // Filter transactions by vendor for a user
     public List<Transaction> getTransactionsByVendor(int userId, String vendor) {
         List<Transaction> transactions = new ArrayList<>();
         String sql = "SELECT transaction_id, date, time, description, vendor, amount, user_id FROM transactions WHERE user_id = ? AND vendor = ? ORDER BY date DESC, time DESC";
@@ -160,7 +160,7 @@ public class TransactionDao {
         return transactions;
     }
 
-    // UPDATE - Update transaction
+
     public boolean updateTransaction(Transaction transaction) {
         String sql = "UPDATE transactions SET date = ?, time = ?, description = ?, vendor = ?, amount = ? WHERE transaction_id = ?";
 
@@ -187,29 +187,8 @@ public class TransactionDao {
         return false;
     }
 
-    // DELETE - Delete transaction by ID
-    public boolean deleteTransaction(int transactionId) {
-        String sql = "DELETE FROM transactions WHERE transaction_id = ?";
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setInt(1, transactionId);
-
-            int rowsAffected = statement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Transaction deleted successfully!");
-                return true;
-            }
-        } catch (SQLException e) {
-            System.err.println("Error deleting transaction: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    // Helper method to map ResultSet to Transaction object
+    // map ResultSet to Transaction object
     private Transaction mapResultSetToTransaction(ResultSet resultSet) throws SQLException {
         return new Transaction(
                 resultSet.getInt("transaction_id"),

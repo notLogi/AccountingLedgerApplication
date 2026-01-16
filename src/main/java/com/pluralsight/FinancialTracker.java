@@ -14,9 +14,8 @@ import java.util.Scanner;
 
 public class FinancialTracker {
 
-    /* ------------------------------------------------------------------
-       Shared data and formatters
-       ------------------------------------------------------------------ */
+
+      // Shared data and formatters
     private static final String DATE_PATTERN = "yyyy-MM-dd";
     private static final String TIME_PATTERN = "HH:mm:ss";
 
@@ -29,17 +28,16 @@ public class FinancialTracker {
     public static final String BLUE = "\u001B[34m";
     public static final String YELLOW = "\u001B[33m";
 
-    // DAOs
+
     private static UserDao userDAO;
     private static TransactionDao transactionDao;
 
-    // Current logged-in user
+
     private static Integer currentUserId = null;
     private static String currentUsername = null;
 
-    /* ------------------------------------------------------------------
-       Main menu
-       ------------------------------------------------------------------ */
+
+       // Main menu
     public static void main(String[] args) {
         // Initialize database connection and DAOs
         DataSource dataSource = DatabaseConfig.getDataSource();
@@ -48,7 +46,7 @@ public class FinancialTracker {
 
         Scanner scanner = new Scanner(System.in);
 
-        // User login/registration
+        // User login  registration
         if (!loginOrRegister(scanner, userDao)) {
             System.out.println("Exiting application...");
             scanner.close();
@@ -123,7 +121,10 @@ public class FinancialTracker {
         System.out.println("Enter username:");
         String username = scanner.nextLine().trim();
 
-        Integer userId = userDao.login(username);
+        System.out.println("Enter password:");
+        String password = scanner.nextLine().trim();
+
+        Integer userId = userDao.login(username, password);
 
         if (userId != null) {
             currentUserId = userId;
@@ -131,10 +132,11 @@ public class FinancialTracker {
             System.out.println(GREEN + "Login successful! Welcome, " + username + "!" + DEFAULT);
             return true;
         } else {
-            System.out.println(RED + "User not found. Please try again or register." + DEFAULT);
+            System.out.println(RED + "Invalid username or password." + DEFAULT);
             return loginOrRegister(scanner, userDao);
         }
     }
+
 
     private static boolean register(Scanner scanner, UserDao userDao) {
         System.out.println("Enter new username:");
@@ -145,7 +147,15 @@ public class FinancialTracker {
             return register(scanner, userDao);
         }
 
-        Integer userId = userDao.register(username);
+        System.out.println("Enter new password:");
+        String password = scanner.nextLine().trim();
+
+        if (password.isEmpty()) {
+            System.out.println(RED + "Password cannot be empty!" + DEFAULT);
+            return register(scanner, userDao);
+        }
+
+        Integer userId = userDao.register(username, password);
 
         if (userId != null) {
             currentUserId = userId;
@@ -157,6 +167,7 @@ public class FinancialTracker {
             return loginOrRegister(scanner, userDao);
         }
     }
+
 
     private static void viewAllUsers(UserDao userDao) {
         System.out.println();
@@ -175,10 +186,8 @@ public class FinancialTracker {
         System.out.println();
     }
 
-    /* ------------------------------------------------------------------
-       Add new transactions
-       ------------------------------------------------------------------ */
 
+       // Add new transactions
     private static void addDeposit(Scanner scanner) {
         LocalDate dateFormatted = null;
         LocalTime timeFormatted = null;
@@ -320,9 +329,7 @@ public class FinancialTracker {
         }
     }
 
-    /* ------------------------------------------------------------------
-       Ledger menu
-       ------------------------------------------------------------------ */
+    //Ledger Menu
     private static void ledgerMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
@@ -388,9 +395,8 @@ public class FinancialTracker {
         }
     }
 
-    /* ------------------------------------------------------------------
-       Reports menu
-       ------------------------------------------------------------------ */
+
+      // Reports menu
     private static void reportsMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
