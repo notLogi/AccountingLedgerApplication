@@ -24,7 +24,7 @@ public class accountingLedgerApplication {
                 D) Add Deposit 
                 P) Make Payment (Debit)
                 L) Ledger - display the ledger screen
-                X) Exit - exit the applicationzaintest
+                X) Exit - exit the applicationzain
                 Choose: """
             );
 
