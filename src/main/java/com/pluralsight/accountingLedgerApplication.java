@@ -55,7 +55,7 @@ public class accountingLedgerApplication {
         String desc = Scanner.nextLine().trim();
         System.out.print("Vendor: ");
         String vendor = Scanner.nextLine().trim();
-        BigDecimal Check = readMoney("Amount (positive test): ");
+        BigDecimal Check = readMoney("Amount (positive): ");
         if (Check.compareTo(BigDecimal.ZERO) <= 0) {
             System.out.println("Amount must be positive.");
             return;
