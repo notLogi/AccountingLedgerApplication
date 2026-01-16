@@ -25,7 +25,6 @@ public class accountingLedgerApplication {
                 P) Make Payment (Debit)
                 L) Ledger - display the ledger screen
                 X) Exit - exit the applicationzaintest
-                test
                 Choose: """
             );
 
