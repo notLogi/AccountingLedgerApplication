@@ -21,35 +21,60 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public int getTransactionId(){
+    public int getTransactionId() {
         return transactionId;
     }
-    public int getUserId(){
-        return userId;
+
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
     }
-    public LocalDateTime getDate(){
-        return dateTime;
+
+    public LocalDate getDate() {
+        return date;
     }
-    public void setDateTime(LocalDateTime dateTime){
-        this.dateTime = dateTime;
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
-    public String getDescription(){
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public String getDescription() {
         return description;
     }
-    public void setDescription(String description){
+
+    public void setDescription(String description) {
         this.description = description;
     }
-    public String getVendor(){
+
+    public String getVendor() {
         return vendor;
     }
-    public void setVendor(String vendor){
+
+    public void setVendor(String vendor) {
         this.vendor = vendor;
     }
-    public double getAmount(){
+
+    public double getAmount() {
         return amount;
     }
-    public void setAmount(double amount){
+
+    public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override
