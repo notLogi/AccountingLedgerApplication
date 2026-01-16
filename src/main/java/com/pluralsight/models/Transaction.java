@@ -1,7 +1,6 @@
-package com.pluralsight;
+package com.pluralsight.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Transaction {
@@ -15,6 +14,15 @@ public class Transaction {
 
     public Transaction(int transactionId, LocalDate date, LocalTime time, String description, String vendor, double amount, int userId) {
         this.transactionId = transactionId;
+        this.date = date;
+        this.time = time;
+        this.description = description;
+        this.vendor = vendor;
+        this.amount = amount;
+        this.userId = userId;
+    }
+
+    public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount, int userId) {
         this.date = date;
         this.time = time;
         this.description = description;
