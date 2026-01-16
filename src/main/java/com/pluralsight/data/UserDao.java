@@ -81,7 +81,7 @@ public class UserDao {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                usernames.add(resultSet.getString("user_name"));
+                usernames.add(resultSet.getString("name"));
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving all users: " + e.getMessage());

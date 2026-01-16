@@ -5,7 +5,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import javax.sql.DataSource;
 
 public class DatabaseConfig {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/financial_tracker";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/accountingledger";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "yearup";
 
