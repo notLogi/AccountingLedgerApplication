@@ -7,18 +7,29 @@ import java.time.LocalTime;
 public class Transaction {
     private int transactionId;
     private int userId;
-    private LocalDateTime dateTime;
+    private LocalDate date;
+    private LocalTime time;
     private String description;
     private String vendor;
     private double amount;
 
-    Transaction(int transactionId, int userId, LocalDateTime dateTime, String description, String vendor, double amount){
-        this.transactionId = transactionId;
-        this.userId = userId;
-        this.dateTime = dateTime;
+    public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount, int userId) {
+        this.date = date;
+        this.time = time;
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
+        this.userId = userId;
+    }
+
+    public Transaction(int transactionId, LocalDate date, LocalTime time, String description, String vendor, double amount, int userId) {
+        this.transactionId = transactionId;
+        this.date = date;
+        this.time = time;
+        this.description = description;
+        this.vendor = vendor;
+        this.amount = amount;
+        this.userId = userId;
     }
 
     public int getTransactionId() {
