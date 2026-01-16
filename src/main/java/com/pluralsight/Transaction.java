@@ -4,18 +4,29 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Transaction {
+    private int userId;
+    private String name;
     private LocalDate date;
     private LocalTime time;
     private String description;
     private String vendor;
     private double amount;
 
-    Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount){
+    Transaction(int userId, String name, LocalDate date, LocalTime time, String description, String vendor, double amount){
+        this.userId = userId;
+        this.name = name;
         this.date = date;
         this.time = time;
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
+    }
+
+    public int getUserId(){
+        return userId;
+    }
+    public String getName(){
+        return name;
     }
     public LocalDate getDate(){
         return date;
