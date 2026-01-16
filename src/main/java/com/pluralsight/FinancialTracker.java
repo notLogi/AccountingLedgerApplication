@@ -442,35 +442,36 @@ public class FinancialTracker {
 
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         System.out.println();
-        System.out.println(GREEN + "| TRANSACTIONS BY DATE |" + DEFAULT);
+        System.out.println(GREEN + "Transactions by date" + DEFAULT);
         List<Transaction> transactions = transactionDao.getTransactionsByDateRange(currentUserId, start, end);
         displayTransactions(transactions);
     }
 
     private static void filterTransactionsByVendor(String vendor) {
         System.out.println();
-        System.out.println(GREEN + "| TRANSACTIONS BY VENDOR |" + DEFAULT);
+        System.out.println(GREEN + "Transactions by vendor: " + DEFAULT);
         List<Transaction> transactions = transactionDao.getTransactionsByVendor(currentUserId, vendor);
         displayTransactions(transactions);
     }
 
     private static void customSearch(Scanner scanner) {
         System.out.println();
-        System.out.println(GREEN + "| CUSTOM-SEARCH MENU |" + DEFAULT);
+        System.out.println(GREEN + "|ENTER YOUR PARAMETERS|" + DEFAULT);
+        System.out.println("Can leave blank on all.");
 
-        System.out.println("Start date (yyyy-MM-dd, Leave Empty for None):");
+        System.out.println("Start date (yyyy-MM-dd):");
         String stringStartDate = scanner.nextLine().trim();
 
-        System.out.println("Enter End date (yyyy-MM-dd, Leave Empty for None):");
+        System.out.println("Enter End date (yyyy-MM-dd):");
         String stringEndDate = scanner.nextLine().trim();
 
-        System.out.println("Description (Leave Empty for None):");
+        System.out.println("Description:");
         String description = scanner.nextLine();
 
-        System.out.println("Vendor (Leave Empty for None):");
+        System.out.println("Vendor:");
         String vendor = scanner.nextLine();
 
-        System.out.println("Amount (Leave Empty for None):");
+        System.out.println("Amount:");
         String amount = scanner.nextLine();
 
         // Get all transactions for the user
