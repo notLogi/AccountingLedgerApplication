@@ -13,15 +13,6 @@ public class Transaction {
     private String vendor;
     private double amount;
 
-    public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount, int userId) {
-        this.date = date;
-        this.time = time;
-        this.description = description;
-        this.vendor = vendor;
-        this.amount = amount;
-        this.userId = userId;
-    }
-
     public Transaction(int transactionId, LocalDate date, LocalTime time, String description, String vendor, double amount, int userId) {
         this.transactionId = transactionId;
         this.date = date;
